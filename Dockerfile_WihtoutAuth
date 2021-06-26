@@ -8,11 +8,9 @@ RUN unzip hoverfly_bundle_linux_amd64.zip
 
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
-ENV USER_NAME="user"
-ENV PASSWORD="password"
 COPY --from=build-env /usr/local/SpectoLabs/hoverfly /bin/hoverfly
 COPY --from=build-env /usr/local/SpectoLabs/hoverctl /bin/hoverctl
-ENTRYPOINT /bin/hoverfly -webserver -listen-on-host=0.0.0.0 -auth -username=$USER_NAME -password=$PASSWORD
+ENTRYPOINT ["/bin/hoverfly", "-webserver", "-listen-on-host=0.0.0.0"]
 CMD [""]
 
 EXPOSE 8500 8888
